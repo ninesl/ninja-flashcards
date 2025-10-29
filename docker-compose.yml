@@ -1,0 +1,36 @@
+name: ninja-flashcards
+services:
+  postgres:
+    image: postgres:alpine
+    network_mode: host
+    environment:
+      POSTGRES_DB: final_capstone
+      POSTGRES_USER: final_capstone_owner
+      POSTGRES_PASSWORD: finalcapstone
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/sample-data.sql:/docker-entrypoint-initdb.d/02-sample-data.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: 
+      context: ./java
+      network: host
+    network_mode: host
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/final_capstone
+      - SPRING_DATASOURCE_USERNAME=final_capstone_owner
+      - SPRING_DATASOURCE_PASSWORD=finalcapstone
+    depends_on:
+      - postgres
+
+  frontend:
+    build: 
+      context: ./vue
+      network: host
+    network_mode: host
+    depends_on:
+      - backend
+      
+volumes:
+  postgres_data:
