@@ -2,7 +2,7 @@
 
 This was a Capstone project for my degree at Western Governor's University. \
 I took a hacky type of approach by having everything run in the same dockerfile for the image, \
-but this drastically simplified deployment to Google and reduced costs VS mounted cloud storage.
+but this drastically simplified deployment and reduced costs VS mounted cloud storage.
 
 This was deployed on AWS [here](http://flashcard-alb-2037441729.us-east-1.elb.amazonaws.com/)
 
